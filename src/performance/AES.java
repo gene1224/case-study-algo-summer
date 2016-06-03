@@ -8,28 +8,39 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
-
 public class AES {
-	public long encrypt(String plainText)
-			throws Exception {
+	public long total = 0;
+	public byte[] encrypt(String plainText) throws Exception {
 		Cipher cipher = Cipher.getInstance("AES");
 		SecretKey key = KeyGenerator.getInstance("AES").generateKey();
+
+		Date key_start = new Date();
 		cipher.init(Cipher.ENCRYPT_MODE, key);
+		Date key_end = new Date();
+		System.out.println("Key Initializaion Execution Time : "
+				+ (key_end.getTime() - key_start.getTime()));
+		
 		Date start = new Date();
-		cipher.doFinal(plainText.getBytes());
+		byte[] encryptedt_text = cipher.doFinal(plainText.getBytes());
 		Date end = new Date();
-		return end.getTime() - start.getTime();
+		long time = end.getTime() - start.getTime();
+		System.out.println("Execution Time : "
+				+ time + "ms");
+		total += time;
+		return encryptedt_text;
 	}
-	
+
 	public static void main(String[] args) {
 		AES aes = new AES();
-		System.out.println("Advance Encryption Standards");
+		System.out.println("##### Advance Encryption Standards ######");
+		System.out.println("##### --        Group - 1       -- ######");
+		System.out.println("#####     **Algorithm Testing**    ######");
 		String text = "";
+		// if in windows Please Place your data set on C: then change
+		// "/home/rangrang/.." to "C:\"
 		try (BufferedReader br = new BufferedReader(new FileReader(
 				"/home/rangrang/Desktop/Accidents0514.csv"))) {
 			System.out.println("--Start Reading--");
-			String sCurrentLine;
-			int x = 0;
 			StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 			while (line != null) {
@@ -38,24 +49,23 @@ public class AES {
 				line = br.readLine();
 			}
 			text = sb.toString();
-
 			System.out.println("--Done Reading--");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		try {
 			for (int x = 1; x < 6; x++) {
 				System.out.println("Test No. : " + x);
-				System.out.println("--Start Encrypt--");
-				System.out.println("Execution Time : "
-						+ aes.encrypt(text) + "ms");
-				System.out.println("--Done Encrypt--");
+				System.out.println("\t ### -- Start Encrypt -- ###");
+				aes.encrypt(text);
+				System.out.println("\t ### -- Done Encrypt -- ###");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("Average Execution : " + (aes.total/5));
+		System.out.println("#####    **  Execution  Done **    ######");
+		System.out.println("##### --   Sescon, Torres, Ong  -- ######");
+		System.out.println("#####            Serentas          ######");
 	}
-
-	
 }
