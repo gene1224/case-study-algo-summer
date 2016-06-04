@@ -10,22 +10,16 @@ import javax.crypto.SecretKey;
 
 class DES {
 	public long total = 0;
+
 	public byte[] encrypt(String plainText) throws Exception {
 		Cipher cipher = Cipher.getInstance("DES");
 		SecretKey key = KeyGenerator.getInstance("DES").generateKey();
-
-		Date key_start = new Date();
 		cipher.init(Cipher.ENCRYPT_MODE, key);
-		Date key_end = new Date();
-		System.out.println("Key Initializaion Execution Time : "
-				+ (key_end.getTime() - key_start.getTime()));
-
 		Date start = new Date();
 		byte[] encryptedt_text = cipher.doFinal(plainText.getBytes());
 		Date end = new Date();
 		long time = end.getTime() - start.getTime();
-		System.out.println("Execution Time : "
-				+ time + "ms");
+		System.out.println("Execution Time : " + time + "ms");
 		total += time;
 		return encryptedt_text;
 	}
@@ -39,7 +33,7 @@ class DES {
 		// if in windows Please Place your data set on C: then change
 		// "/home/rangrang/.." to "C:\"
 		try (BufferedReader br = new BufferedReader(new FileReader(
-				"/home/rangrang/Desktop/Accidents0514.csv"))) {
+				"/home/rangrang/Desktop/msnbc990928.seq"))) {
 			System.out.println("--Start Reading--");
 			StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
@@ -63,7 +57,7 @@ class DES {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Average Execution : " + (des.total/5));
+		System.out.println("Average Execution : " + (des.total / 5));
 		System.out.println("#####    **  Execution  Done **    ######");
 		System.out.println("##### --   Sescon, Torres, Ong  -- ######");
 		System.out.println("#####            Serentas          ######");
